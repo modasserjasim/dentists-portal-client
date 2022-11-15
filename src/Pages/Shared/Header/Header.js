@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import logo from '../../../Assets/images/dentist-logo.png';
+import logo from '../../../assets/images/dentist-logo.png';
 
 const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
@@ -9,7 +9,7 @@ const Header = () => {
     const activeMenu = "btn btn-sm glass text-black"
 
     return (
-        <div className='sticky top-0 bg-white/60 backdrop-blur-sm'>
+        <div className='sticky top-0 bg-white/60 backdrop-blur-sm z-50'>
             <div>
                 <div className="relative">
                     {/* For md screen size */}
@@ -18,7 +18,7 @@ const Header = () => {
                         <div className="container mx-auto flex items-center justify-between">
                             <Link to='/' className="flex items-center gap-3 cursor-pointer" >
                                 <img src={logo} alt="Logo" className='w-12' />
-                                <h1 >Dentists Portal</h1>
+                                <h1 className="text-xl font-semibold">Dentists Portal</h1>
                             </Link>
                             <ul className="hidden md:flex items-center justify-center space-x-8">
                                 <li>
@@ -69,7 +69,7 @@ const Header = () => {
                                 <div>
                                     <Link to='/' className="flex items-center gap-3 cursor-pointer" >
                                         <img src={logo} alt="Logo" className='w-12' />
-                                        <h1 >Dentists Portal</h1>
+                                        <h1 className="text-xl font-semibold">Dentists Portal</h1>
                                     </Link>
                                 </div>
                             </div>

@@ -4,7 +4,7 @@ import About from "../../Pages/About/About"
 import Appointment from "../../Pages/Appointment/Appointment"
 import Contact from "../../Pages/Contact/Contact"
 import ErrorPage from "../../Pages/ErrorPage/ErrorPage"
-import Home from "../../Pages/Home/Home"
+import Home from "../../Pages/Home/Home/Home"
 import Login from "../../Pages/Login/Login"
 import Reviews from "../../Pages/Reviews/Reviews"
 
