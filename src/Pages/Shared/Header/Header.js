@@ -48,6 +48,7 @@ const Header = () => {
                                 </li>
                             </ul>
                             <div className="justify-end flex items-center space-x-4 xl:space-x-8">
+                                {/* Login button desktop  */}
                                 <Link to='/login'><button to='/' className='btn btn-sm hidden md:block bg-gradient-to-tl from-primary to-secondary text-white border-0'>Login</button></Link>
                                 <div className="flex lg:hidden">
                                     <button aria-label="open menu" onClick={() => setShowMenu(true)} className="text-black md:hidden focus:outline-none focus:ring-2 rounded focus:ring-gray-600">
@@ -107,8 +108,12 @@ const Header = () => {
                                         Contact
                                     </NavLink>
                                 </li>
+                                <li>
+                                    <Link to='/login' className='btn btn-sm bg-gradient-to-tl from-primary to-secondary text-white border-0'>Login</Link>
+                                </li>
 
                             </ul>
+
                         </div>
                     </div>
                 </div>
