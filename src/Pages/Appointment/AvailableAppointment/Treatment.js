@@ -1,5 +1,4 @@
 import React from 'react';
-import './Treatment.css'
 
 const Treatment = ({ treatment, setTreatment }) => {
     const { name, slots } = treatment;
