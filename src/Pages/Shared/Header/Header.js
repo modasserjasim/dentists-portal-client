@@ -1,9 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import logo from '../../../assets/images/dentist-logo.png';
+import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
 
 const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
+    const { user, logOut } = useContext(AuthContext);
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                toast.success('Successfully Logged out from the site')
+            })
+            .catch(err => {
+                toast.error(err.code)
+            })
+    }
 
     const inActive = "text-gray-800 uppercase btn-sm";
     const activeMenu = "btn btn-sm glass text-black"
@@ -49,7 +62,12 @@ const Header = () => {
                             </ul>
                             <div className="justify-end flex items-center space-x-4 xl:space-x-8">
                                 {/* Login button desktop  */}
-                                <Link to='/login'><button to='/' className='btn btn-sm hidden md:block bg-gradient-to-tl from-primary to-secondary text-white border-0'>Login</button></Link>
+                                {
+                                    user?.uid ? <>
+                                        <Link to='/dashboard'><button className='btn btn-sm hidden md:block bg-gradient-to-tl from-primary to-secondary text-white border-0'>Dashboard</button></Link>
+                                        <button onClick={handleLogOut} className='btn btn-sm hidden md:block bg-gradient-to-tl from-primary to-secondary text-white border-0'>Logout</button>
+                                    </> : <Link to='/login'><button className='btn btn-sm hidden md:block bg-gradient-to-tl from-secondary to-primary text-white border-0'>Login</button></Link>
+                                }
                                 <div className="flex lg:hidden">
                                     <button aria-label="open menu" onClick={() => setShowMenu(true)} className="text-black md:hidden focus:outline-none focus:ring-2 rounded focus:ring-gray-600">
                                         {/* Menu icon  */}
@@ -108,9 +126,15 @@ const Header = () => {
                                         Contact
                                     </NavLink>
                                 </li>
-                                <li>
-                                    <Link to='/login' className='btn btn-sm bg-gradient-to-tl from-primary to-secondary text-white border-0'>Login</Link>
-                                </li>
+
+                                {
+                                    user?.uid ? <>
+                                        <li> <Link to='/dashboard'><button className='btn btn-sm   bg-gradient-to-tl from-primary to-secondary text-white border-0'>Dashboard</button></Link></li>
+                                        <li> <button onClick={handleLogOut} className='btn btn-sm   bg-gradient-to-tl from-primary to-secondary text-white border-0'>Logout</button></li>
+                                    </> : <li>
+                                        <Link to='/login'><button className='btn btn-sm bg-gradient-to-tl from-secondary to-primary text-white border-0'>Login</button></Link>
+                                    </li>
+                                }
 
                             </ul>
 

@@ -1,19 +1,31 @@
 import React, { useContext } from 'react';
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const SignUp = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const { createAccount } = useContext(AuthContext);
+    const { createAccount, updateUser, logOut } = useContext(AuthContext);
     const handleSignUp = data => {
         console.log(data);
         createAccount(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                toast.success(`You have sucessfully created your account, ${data.name}`);
+                //update username/profile
+                const userInfo = {
+                    displayName: data.name
+                }
+                updateUser(userInfo)
+                    .then(() => {
+                        console.log('profile name updated');
+                    })
+                    .catch(err => console.log(err));
+                logOut();
             })
-            .catch(err => console.log(err))
+            .catch(err => toast.success(err.code))
     }
     return (
         <div className="h-full bg-gray-100 w-full py-16 px-4">
