@@ -19,7 +19,7 @@ root.render(
       <AuthProvider>
         <App />
         <ToastContainer position="top-center"
-          autoClose={1500} />
+          autoClose={2500} />
       </AuthProvider>
     </QueryClientProvider>
   </React.StrictMode>

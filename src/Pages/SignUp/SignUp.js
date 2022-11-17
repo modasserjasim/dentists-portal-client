@@ -1,19 +1,20 @@
 import React, { useContext } from 'react';
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../contexts/AuthProvider/AuthProvider';
 
 const SignUp = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const { createAccount, updateUser, logOut } = useContext(AuthContext);
+    const navigate = useNavigate();
     const handleSignUp = data => {
-        console.log(data);
+        // console.log(data);
         createAccount(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 console.log(user);
-                toast.success(`You have sucessfully created your account, ${data.name}`);
+                toast.success(`You have successfully created your account, ${data.name}`);
                 //update username/profile
                 const userInfo = {
                     displayName: data.name
@@ -24,6 +25,7 @@ const SignUp = () => {
                     })
                     .catch(err => console.log(err));
                 logOut();
+                navigate('/');
             })
             .catch(err => toast.success(err.code))
     }

@@ -3,17 +3,23 @@ import { format } from 'date-fns';
 import Treatment from './Treatment';
 import BookingModal from '../BookingModal/BookingModal';
 import { useQuery } from '@tanstack/react-query';
+import Spinner from '../../../components/Spinner/Spinner';
 
 const AvailableAppointment = ({ selectedDate }) => {
     // const [treatments, setTreatments] = useState([]);
     // for popup data
     const [treatment, setTreatment] = useState(null);
 
+    // for reduce the slot
+    const date = format(selectedDate, 'PP');
     // using react query
-    const { data: treatments = [] } = useQuery({
-        queryKey: ['treatments'],
-        queryFn: () => fetch('http://localhost:3500/treatments')
-            .then(res => res.json())
+    const { data: treatments = [], refetch, isLoading } = useQuery({
+        queryKey: ['treatments', date],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:3500/treatments?date=${date}`);
+            const data = await res.json();
+            return data
+        }
     })
     // console.log(data);
 
@@ -24,6 +30,10 @@ const AvailableAppointment = ({ selectedDate }) => {
     //             setTreatments(data.treatments)
     //         })
     // }, [])
+
+    if (isLoading) {
+        return <Spinner></Spinner>;
+    }
     return (
         <div className='py-10 md:py-16 container mx-auto px-4'>
             <h2 className='bg-gradient-to-r from-primary to-secondary bg-clip-text text-xl text-transparent sm:text-2xl text-center'>Available Appointments on <b>{format(selectedDate, 'PP')}</b></h2>
@@ -39,6 +49,7 @@ const AvailableAppointment = ({ selectedDate }) => {
                     treatment={treatment}
                     selectedDate={selectedDate}
                     setTreatment={setTreatment}
+                    refetch={refetch}
                 ></BookingModal>
             }
         </div>

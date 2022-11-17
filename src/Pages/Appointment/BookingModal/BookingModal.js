@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { format } from 'date-fns';
+import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
+import { toast } from 'react-toastify';
 
-const BookingModal = ({ treatment, setTreatment, selectedDate }) => {
+const BookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
+    const { user } = useContext(AuthContext);
     const { name, slots } = treatment;
     const date = format(selectedDate, 'PP')
     const handleBooking = e => {
@@ -10,7 +13,7 @@ const BookingModal = ({ treatment, setTreatment, selectedDate }) => {
 
         const bookingInfo = {
             treatmentName: name,
-            appointmentDate: form.date.value,
+            appointmentDate: date,
             AppointmentTime: form.slot.value,
             patientName: form.name.value,
             email: form.email.value,
@@ -18,7 +21,24 @@ const BookingModal = ({ treatment, setTreatment, selectedDate }) => {
         }
         console.log(bookingInfo);
 
-        setTreatment(null)
+        fetch('http://localhost:3500/booking', {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(bookingInfo)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status) {
+                    setTreatment(null);
+                    toast.success(data.message);
+                    refetch();
+                }
+
+            })
+
+
     }
     return (
         <>
@@ -42,7 +62,7 @@ const BookingModal = ({ treatment, setTreatment, selectedDate }) => {
                                 placeholder='Select available time'
                                 required
                             >
-                                <option value="" disabled selected >Select available time</option>
+                                <option value="" selected disabled>Select available time</option>
                                 {
                                     slots.map((slot, index) => <option key={index} value={slot}>{slot}</option>)
                                 }
@@ -53,7 +73,7 @@ const BookingModal = ({ treatment, setTreatment, selectedDate }) => {
                         </div>
                         {/* Appointment time  */}
                         <div className="relative mt-3">
-                            <input name='name' type="text" id="floating_outlined2" className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " required />
+                            <input name='name' type="text" defaultValue={user?.displayName} id="floating_outlined2" className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " required />
                             <label htmlFor="floating_outlined2" className="absolute text-md text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white  px-2 peer-focus:px-2 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Full Name</label>
                         </div>
                         <div className="relative mt-3">
@@ -61,7 +81,7 @@ const BookingModal = ({ treatment, setTreatment, selectedDate }) => {
                             <label htmlFor="floating_outlined3" className="absolute text-md text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white  px-2 peer-focus:px-2 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Phone Number</label>
                         </div>
                         <div className="relative my-3">
-                            <input name='email' type="email" id="floating_outlined4" className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " required />
+                            <input name='email' type="email" defaultValue={user?.email} disabled id="floating_outlined4" className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary peer" placeholder=" " required />
                             <label htmlFor="floating_outlined4" className="absolute text-md text-gray-500  duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white  px-2 peer-focus:px-2 peer-focus:text-gray-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">Email Address</label>
                         </div>
                         <button
