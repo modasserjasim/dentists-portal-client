@@ -1,11 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Spinner from '../../../components/Spinner/Spinner';
 
 const AddDoctor = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const imgHostKey = process.env.REACT_APP_imgbb_key;
+    const navigate = useNavigate();
+
+    // get specialty name from db collection
     const { data: specialties, isLoading } = useQuery({
         queryKey: ['specialty'],
         queryFn: async () => {
@@ -24,7 +29,7 @@ const AddDoctor = () => {
         const formData = new FormData();
         formData.append('image', image);
         // console.log(image);
-        const url = `https://api.imgbb.com/1/upload?expiration=600&key=${imgHostKey}`;
+        const url = `https://api.imgbb.com/1/upload?key=${imgHostKey}`;
         fetch(url, {
             method: "POST",
             body: formData
@@ -34,6 +39,7 @@ const AddDoctor = () => {
                 console.log(imgData);
                 if (imgData.success) {
                     const doctorImg = (imgData.data.url);
+                    console.log(doctorImg);
                     const doctorInfo = {
                         name: data.name,
                         email: data.email,
@@ -41,6 +47,24 @@ const AddDoctor = () => {
                         image: doctorImg
 
                     }
+                    //save doctors information to the database
+                    fetch('http://localhost:3500/doctors', {
+                        method: "POST",
+                        headers: {
+                            "content-type": "application/json",
+                            authorization: `bearer ${localStorage.getItem('AccessToken')}`
+                        },
+                        body: JSON.stringify(doctorInfo)
+                    })
+                        .then(res => res.json())
+                        .then(result => {
+                            if (result.status) {
+                                toast.success(result.message);
+                                navigate('/dashboard/manage-doctors')
+                            } else {
+                                toast.error(result.error)
+                            }
+                        })
                 }
             })
     }
