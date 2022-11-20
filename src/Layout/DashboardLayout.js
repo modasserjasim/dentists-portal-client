@@ -61,6 +61,25 @@ const DashboardLayout = () => {
                                                 <span className='hidden sm:block'>Users</span>
                                             </NavLink>
                                         </li>
+                                        <li className="rounded-sm">
+                                            <NavLink to='/dashboard/add-doctor' className={({ isActive }) => isActive ? activeMenu : inActive} >
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    className="w-6 h-6"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke="currentColor"
+                                                    strokeWidth={2}
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                                                    />
+                                                </svg>
+                                                <span className='hidden sm:block'>Add A Doctor</span>
+                                            </NavLink>
+                                        </li>
                                     </>
                                 }
                                 <li className="rounded-sm">
@@ -86,7 +105,7 @@ const DashboardLayout = () => {
                         </div>
                     </div>
                 </div>
-                <div className="mx-auto sm:mt-12 container px-5 md:px-20 lg:px-32">
+                <div className="mx-auto my-7 sm:my-12 container px-5 md:px-20 lg:px-32">
                     <Outlet></Outlet>
                 </div>
             </div>
