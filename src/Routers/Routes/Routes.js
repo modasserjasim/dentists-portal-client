@@ -1,14 +1,17 @@
 import { createBrowserRouter } from "react-router-dom"
+import DashboardLayout from "../../Layout/DashboardLayout"
 import Main from "../../Layout/Main"
 import About from "../../Pages/About/About"
 import Appointment from "../../Pages/Appointment/Appointment/Appointment"
 import Contact from "../../Pages/Contact/Contact"
-import Dashboard from "../../Pages/Dashboard/Dashboard"
+import MyAppointment from "../../Pages/Dashboard/MyAppointment/MyAppointment"
+import Users from "../../Pages/Dashboard/Users/Users"
 import ErrorPage from "../../Pages/ErrorPage/ErrorPage"
 import Home from "../../Pages/Home/Home/Home"
 import Login from "../../Pages/Login/Login"
 import Reviews from "../../Pages/Reviews/Reviews"
 import SignUp from "../../Pages/SignUp/SignUp"
+import AdminRoute from "../AdminRoute/AdminRoute"
 import PrivateRoute from "../PrivateRoute/PrivateRoute"
 
 export const router = createBrowserRouter([
@@ -45,10 +48,21 @@ export const router = createBrowserRouter([
                 path: '/sign-up',
                 element: <SignUp></SignUp>
             },
+
+        ]
+    },
+    {
+        path: '/dashboard',
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        children: [
             {
                 path: '/dashboard',
-                element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>
+                element: <MyAppointment></MyAppointment>
             },
+            {
+                path: '/dashboard/users',
+                element: <AdminRoute><Users></Users></AdminRoute>
+            }
         ]
-    }
+    },
 ])
