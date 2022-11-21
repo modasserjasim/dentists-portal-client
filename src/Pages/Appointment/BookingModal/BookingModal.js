@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 const BookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
     const { user } = useContext(AuthContext);
-    const { name, slots } = treatment;
+    const { name, slots, price } = treatment;
     const date = format(selectedDate, 'PP')
     const handleBooking = e => {
         e.preventDefault();
@@ -17,7 +17,8 @@ const BookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
             AppointmentTime: form.slot.value,
             patientName: form.name.value,
             email: form.email.value,
-            phone: form.phone.value
+            phone: form.phone.value,
+            price
         }
         console.log(bookingInfo);
 

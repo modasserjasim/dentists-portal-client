@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteError } from 'react-router-dom';
 
 const ErrorPage = () => {
+    const error = useRouteError();
     return (
         <div className="flex items-center w-full h-screen">
             <div className="mx-auto">
@@ -30,14 +31,17 @@ const ErrorPage = () => {
                     </div>
                     <div className="flex flex-col justify-center pt-16 details-container">
                         <p className="text-4xl font-semibold leading-9 text-center text-slate-800">
-                            Opps! 404 Error
+                            Opps!
                         </p>
                         <p className="pt-4 text-base leading-none text-center text-slate-600">
-                            Something went wrong, please try again
+                            Sorry, an unexpected error has occurred.
                         </p>
-                        <div className="mx-auto mt-10 btn-container">
+                        <p className='text-lg text-red-600 text-center my-5'>
+                            <i>{error.statusText || error.message}</i>
+                        </p>
+                        <div className="mx-auto btn-container">
                             <Link to='/'>
-                                <button className="px-6 py-4 mx-auto text-sm font-medium text-white bg-primary rounded leading-[14px] hover:bg-blue-600">
+                                <button className="px-6 py-4 mx-auto text-sm font-medium text-white bg-primary rounded leading-[14px] hover:bg-secondary">
                                     Go Back
                                 </button>
                             </Link>
