@@ -24,13 +24,10 @@ const Login = () => {
     }
 
     const handleLogin = data => {
-        console.log(data);
         setLoginError('');
         loginWithEmail(data.email, data.password)
             .then(result => {
-                console.log(data);
                 const user = result.user;
-                console.log(user);
                 setLoginUserEmail(data.email);
                 toast.success(`${user.displayName}, you have successfully logged in!`)
             })

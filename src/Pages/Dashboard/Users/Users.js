@@ -21,7 +21,7 @@ const Users = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 if (data.status) {
                     toast.success(data.message)
                     refetch();

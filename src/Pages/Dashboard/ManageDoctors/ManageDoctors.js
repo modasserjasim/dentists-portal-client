@@ -24,7 +24,6 @@ const ManageDoctors = () => {
     });
 
     const handleDoctorDelete = doctor => {
-        console.log(doctor);
         fetch(`http://localhost:3500/doctor/${doctor._id}`, {
             method: "DELETE",
             headers: {
@@ -33,7 +32,6 @@ const ManageDoctors = () => {
         })
             .then(res => res.json())
             .then(result => {
-                console.log(result);
                 if (result.status) {
                     toast.success(result.message);
                     refetch();

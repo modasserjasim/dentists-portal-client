@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import logo from '../../../assets/images/dentist-logo.png';
 import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
+import { GoSignIn, GoSignOut, GoDashboard } from "react-icons/go";
 
 const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
@@ -64,9 +65,9 @@ const Header = () => {
                                 {/* Login button desktop  */}
                                 {
                                     user?.uid ? <>
-                                        <Link to='/dashboard'><button className='btn btn-sm hidden md:block bg-gradient-to-tl from-primary to-secondary text-white border-0'>Dashboard</button></Link>
-                                        <button onClick={handleLogOut} className='btn btn-sm hidden md:block bg-gradient-to-tl from-primary to-secondary text-white border-0'>Logout</button>
-                                    </> : <Link to='/login'><button className='btn btn-sm hidden md:block bg-gradient-to-tl from-secondary to-primary text-white border-0'>Login</button></Link>
+                                        <Link to='/dashboard'><button className='btn btn-sm hidden md:flex bg-gradient-to-tl from-primary to-secondary text-white border-0'><GoDashboard /> Dashboard</button></Link>
+                                        <button onClick={handleLogOut} className='btn btn-sm hidden md:flex bg-gradient-to-tl from-primary to-secondary text-white border-0'><GoSignOut /> Logout</button>
+                                    </> : <Link to='/login'><button className='btn btn-sm hidden md:flex gap-2 bg-gradient-to-tl from-secondary to-primary text-white border-0'><GoSignIn /> Login</button></Link>
                                 }
                                 <div className="flex lg:hidden">
                                     <button aria-label="open menu" onClick={() => setShowMenu(true)} className="text-black md:hidden focus:outline-none focus:ring-2 rounded focus:ring-gray-600">

@@ -7,7 +7,7 @@ const CheckoutForm = ({ booking }) => {
     const [processing, setProcessing] = useState(false);
     const [trxId, setTrxId] = useState('');
     const [clientSecret, setClientSecret] = useState("");
-    const { patientName, email, price } = booking;
+    const { _id, patientName, email, price } = booking;
     const stripe = useStripe();
     const elements = useElements();
 
@@ -66,8 +66,31 @@ const CheckoutForm = ({ booking }) => {
             return;
         }
         if (paymentIntent.status === 'succeeded') {
-            setSucceeded('Congrats! Your payment completed.');
-            setTrxId(paymentIntent.id);
+            // console.log('card info', card);
+            const payment = {
+                bookingId: _id,
+                patientName,
+                email,
+                price,
+                transactionId: paymentIntent.id
+
+            }
+            fetch('http://localhost:3500/payment', {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    authorization: `bearer ${localStorage.getItem('AccessToken')}`
+                },
+                body: JSON.stringify(payment)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    // console.log(data);
+                    if (data.status) {
+                        setSucceeded('Congrats! Your payment completed.');
+                        setTrxId(paymentIntent.id);
+                    }
+                })
 
         }
         setProcessing(false);

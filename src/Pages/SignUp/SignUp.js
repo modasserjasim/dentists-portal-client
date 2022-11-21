@@ -25,7 +25,6 @@ const SignUp = () => {
         createAccount(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
                 toast.success(`You have successfully created your account, ${data.name}`);
                 //update username/profile
                 const userInfo = {
@@ -33,10 +32,9 @@ const SignUp = () => {
                 }
                 updateUser(userInfo)
                     .then(() => {
-                        console.log('profile name updated');
                         saveUserToDB(user.displayName, user.email)
                     })
-                    .catch(err => console.log(err));
+                    .catch(err => toast.error(err));
                 // logOut();
 
             })

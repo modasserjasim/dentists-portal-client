@@ -15,11 +15,9 @@ const MyAppointment = () => {
                 }
             });
             const data = await res.json();
-            console.log(data);
             return data.bookings;
         }
     })
-    console.log(bookings);
     return (
         <div>
             <h2 className='text-3xl mb-5'>My Appointments</h2>

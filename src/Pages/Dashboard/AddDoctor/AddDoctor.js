@@ -36,10 +36,10 @@ const AddDoctor = () => {
         })
             .then(res => res.json())
             .then(imgData => {
-                console.log(imgData);
+                // console.log(imgData);
                 if (imgData.success) {
                     const doctorImg = (imgData.data.url);
-                    console.log(doctorImg);
+                    // console.log(doctorImg);
                     const doctorInfo = {
                         name: data.name,
                         email: data.email,
