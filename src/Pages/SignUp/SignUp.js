@@ -42,7 +42,7 @@ const SignUp = () => {
     }
     const saveUserToDB = (name, email) => {
         const user = { name, email };
-        fetch('http://localhost:3500/user', {
+        fetch('https://dentists-portal.vercel.app/user', {
             method: "POST",
             headers: {
                 "content-type": "application/json"

@@ -105,7 +105,7 @@ const Login = () => {
                         </div>
 
                         <div className="mt-8">
-                            <button type="submit" className="text-lg rounded-md font-semibold leading-none text-white focus:outline-none bg-gradient-to-tl from-primary to-secondary border rounded hover:bg-secondary py-4 w-full">
+                            <button type="submit" className="text-lg rounded-md font-semibold leading-none text-white focus:outline-none bg-gradient-to-tl from-primary to-secondary border hover:bg-secondary py-4 w-full">
                                 Login to Portal
                             </button>
                         </div>

@@ -16,7 +16,7 @@ const AvailableAppointment = ({ selectedDate }) => {
     const { data: treatments = [], refetch, isLoading } = useQuery({
         queryKey: ['treatments', date],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:3500/treatments?date=${date}`);
+            const res = await fetch(`https://dentists-portal.vercel.app/treatments?date=${date}`);
             const data = await res.json();
             return data
         }
@@ -24,7 +24,7 @@ const AvailableAppointment = ({ selectedDate }) => {
     // console.log(data);
 
     // useEffect(() => {
-    //     fetch('http://localhost:3500/treatments')
+    //     fetch('https://dentists-portal.vercel.app/treatments')
     //         .then(res => res.json())
     //         .then(data => {
     //             setTreatments(data.treatments)

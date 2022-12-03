@@ -22,7 +22,7 @@ const BookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
         }
         // console.log(bookingInfo);
 
-        fetch('http://localhost:3500/booking', {
+        fetch('https://dentists-portal.vercel.app/booking', {
             method: "POST",
             headers: {
                 "content-type": "application/json"
